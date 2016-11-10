@@ -3,32 +3,29 @@ Multi-channel websocket server.
 Websockets server for OSC, MIDI, chat, video channels, shaders, webp streaming etc. made with nodejs
 
 ######Setup nodejs 7
-- wget http://nodejs.org/dist/node-latest.tar.gz 
-- tar -xzf node-latest.tar.gz
-- cd node-7xx
-- ./configure
-- make
-- sudo make install
+
+``` sh
+wget http://nodejs.org/dist/node-latest.tar.gz 
+tar -xzf node-latest.tar.gz
+cd node-7xx
+./configure
+make
+sudo make install
+```
 
 On Raspberry Pi, it takes 4 hours :notes:
 
 ######Git workflow:
 Fork and clone this repo in /opt/
-- cd netdromm/
-- npm install -g mocha nodemon
-- npm install
-- npm start
-copy netdromm to /etc/init.d/ to launch at startup
 
 ``` js
-  var winston = require('winston');
-
-  winston.log('info', 'Hello distributed log files!');
-  winston.info('Hello again distributed logs');
-
-  winston.level = 'debug';
-  winston.log('debug', 'Now my debug messages are written to console!');
+cd netdromm/
+npm install -g mocha nodemon
+npm install
+npm start
 ```
+
+copy netdromm to /etc/init.d/ to launch at startup
 
 ######Run tests
 `npm test`
