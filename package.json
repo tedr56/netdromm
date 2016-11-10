@@ -4,7 +4,8 @@
   "description": "netdromm",
   "main": "index.js",
   "scripts": {
-    "start": "node node_modules/nodemon/bin/nodemon.js index.js"
+    "start": "node node_modules/nodemon/bin/nodemon.js index.js",
+    "test": "mocha spec/integration/init.js"
   },
   "author": {
     "name": "jarpi,brucelane,azopcorp",
