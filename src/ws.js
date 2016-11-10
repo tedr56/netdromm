@@ -13,12 +13,12 @@ function wsCtrl ( httpListener, logger, cb ) {
     }
     this.wss.on('connection', function(socket){
       socket.id = uuid.v4();
-      logger.info('user connected');
+      logger.info('user connected' + socket.upgradeReq.connection.remoteAddress);
       socket.on('disconnect', function(){
-        logger.info('user disconnected');
+        logger.info('user disconnected' + socket.upgradeReq.connection.remoteAddress);
       });
       socket.on('message', function(msg){
-        logger.info('Message received: ' + msg);
+        logger.info('Message received: ' + msg + ' from ' + socket.upgradeReq.connection.remoteAddress);
         that.wss.broadcast(msg, socket.id);
       });
     });
