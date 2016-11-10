@@ -8,7 +8,7 @@ function wsCtrl ( httpListener, logger, cb ) {
     var that = this;
     this.wss.broadcast = function(msg, sender) {
         that.wss.clients.forEach(function(client){
-            if (client.id !== sender) client.send(msg) & logger.info('Message sent!');
+            if (client.id !== sender) client.send(msg) & logger.info('Message sent:' + msg + ' from ' + sender + ' to ' + client.id);
         });
     }
     this.wss.on('connection', function(socket){
