@@ -18,7 +18,8 @@ On Raspberry Pi, it takes 4 hours :notes:
 ######Git workflow:
 Fork and clone this repo in /opt/
 
-``` js
+``` sh
+cd /opt/
 cd netdromm/
 npm install -g mocha nodemon
 npm install
