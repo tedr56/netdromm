@@ -20,6 +20,16 @@ Fork and clone this repo in /opt/
 - npm start
 copy netdromm to /etc/init.d/ to launch at startup
 
+``` js
+  var winston = require('winston');
+
+  winston.log('info', 'Hello distributed log files!');
+  winston.info('Hello again distributed logs');
+
+  winston.level = 'debug';
+  winston.log('debug', 'Now my debug messages are written to console!');
+```
+
 ######Run tests
 `npm test`
 
