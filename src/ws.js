@@ -14,9 +14,9 @@ function wsCtrl ( httpListener, logger, cb ) {
     this.wss.on('connection', function(socket){
       socket.id = uuid.v4();
       // to try if behind a proxy: logger.info('user connected' + socket.upgradeReq.headers['x-forwarded-for']);
-      logger.info('user connected' + socket.upgradeReq.connection.remoteAddress);
+      logger.info('user connected: ' + socket.upgradeReq.connection.remoteAddress);
       socket.on('disconnect', function(){
-        logger.info('user disconnected' + socket.upgradeReq.connection.remoteAddress);
+        logger.info('user disconnected: ' + socket.upgradeReq.connection.remoteAddress);
       });
       socket.on('message', function(msg){
         logger.info('Message received: ' + msg + ' from ' + socket.upgradeReq.connection.remoteAddress);
