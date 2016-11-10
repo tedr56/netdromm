@@ -18,7 +18,7 @@ function wsCtrl ( httpListener, logger, cb ) {
         logger.info('user disconnected');
       });
       socket.on('message', function(msg){
-        logger.info('Message received');
+        logger.info('Message received: ' + msg);
         that.wss.broadcast(msg, socket.id);
       });
     });
