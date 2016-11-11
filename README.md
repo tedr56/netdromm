@@ -31,7 +31,11 @@ npm start
 
 Optional
 copy netdromm to /etc/init.d/ to launch at startup
-`cp /opt/netdromm/netdromm /etc/init.d/`
+
+``` sh
+cp /opt/netdromm/netdromm /etc/init.d/
+update-rc.d netdromm defaults
+```
 
 ######Run tests
 `npm test`
