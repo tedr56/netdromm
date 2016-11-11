@@ -4,6 +4,8 @@ Websockets server for OSC, MIDI, chat, video channels, shaders, webp streaming e
 
 ######Setup nodejs 7
 
+If needed, compile from the source:
+
 ``` sh
 wget http://nodejs.org/dist/node-latest.tar.gz 
 tar -xzf node-latest.tar.gz
@@ -40,4 +42,5 @@ Code, than commit and push to your fork then do a pull request.
 ######Roadmap
 - [x] Basic websocket broadcast
 - [ ] Authentication
+- [ ] Maintain a list of clients (ip whitelist after auth)
 - [ ] Webp streaming
