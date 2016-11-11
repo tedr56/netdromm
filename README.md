@@ -4,6 +4,13 @@ Websockets server for OSC, MIDI, chat, video channels, shaders, webp streaming e
 
 ######Setup nodejs 7
 
+On Linux
+
+``` sh
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
 If needed, compile from the source:
 
 ``` sh
