@@ -16,17 +16,20 @@ sudo make install
 On Raspberry Pi, it takes 4 hours :notes:
 
 ######Git workflow:
-Fork and clone this repo in /opt/
+Fork and clone this your repo and copy it to /opt/
 
 ``` sh
-cd /opt/
-cd netdromm/
+git clone https://github.com/videodromm/netdromm (replace videodromm by your name)
+cp -a netdromm/ /opt/
+cd /opt/netdromm/
 npm install -g mocha nodemon
 npm install
 npm start
 ```
 
+Optional
 copy netdromm to /etc/init.d/ to launch at startup
+`cp /opt/netdromm/netdromm /etc/init.d/`
 
 ######Run tests
 `npm test`
