@@ -47,6 +47,12 @@ update-rc.d netdromm defaults
 ######Run tests
 `npm test`
 
+######Docker
+``` sh
+docker build -t netdromm .
+docker run -it --rm --name netdromm netdromm
+```
+
 ######Contribute
 Code, than commit and push to your fork then do a pull request.
 
