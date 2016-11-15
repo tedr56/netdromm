@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/videodromm/netdromm.svg?branch=master)](https://travis-ci.org/videodromm/netdromm)
+
 # netdromm
 Multi-channel websocket server.
 Websockets server for OSC, MIDI, chat, video channels, shaders, webp streaming etc. made with nodejs
