@@ -1,8 +1,10 @@
 var mocha = require('mocha');
 var chai = require('chai');
+var chaiPromised = require('chai-as-promised');
 var wss = require('../../src/ws.js');
 var WebSocket = require('ws');
 
+chai.use(chaiPromised);
 var expect = chai.expect;
 
 describe('Websocket initialization', function(){
@@ -15,8 +17,9 @@ describe('Websocket initialization', function(){
             console.log('HTTP server initialized!');
         });
         var logger = {info:function(){}};
-        new wss(http, winston, function(err){
-            console.log('WS server initialized!');
+        new wss(http, winston)
+        .then(function(){
+            winston.info('Server initialized');
             done();
         });
     });
