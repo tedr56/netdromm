@@ -50,10 +50,7 @@ update-rc.d netdromm defaults
 `npm test`
 
 ######Docker
-``` sh
-docker build -t netdromm .
-docker run -it --rm --name netdromm netdromm
-```
+See https://github.com/videodromm/docker-videodromm
 
 ######Contribute
 Code, than commit and push to your fork then do a pull request.
