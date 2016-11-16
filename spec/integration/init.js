@@ -3,6 +3,7 @@ var chai = require('chai');
 var chaiPromised = require('chai-as-promised');
 var wss = require('../../src/ws.js');
 var WebSocket = require('ws');
+var Promise = global.Promise || require('promise');
 
 chai.use(chaiPromised);
 var expect = chai.expect;
