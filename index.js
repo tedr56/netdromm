@@ -1,10 +1,11 @@
-'use strict'
+'use strict';
 
-var nodemon = require('nodemon')
-  , winston = require('winston')
-  , http = require('http').createServer()
-  , wss = require('./src/ws.js')
-  , port = process.env.port || 8088;
+var Promise = global.Promise || require('promise');
+var nodemon = require('nodemon');
+var winston = require('winston');
+var http = require('http').createServer();
+var wss = require('./src/ws.js');
+var  port = process.env.port || 8088;
 
 function setUpLogger() {
     winston.configure({
@@ -27,7 +28,7 @@ function initHttpServer() {
 }
 
 function initWsServer( httpListener ){
-   return new wss(httpListener, winston);
+   return wss(httpListener, winston);
 }
 
 function handleError( err ){

@@ -1,12 +1,14 @@
-'use strict'
+'use strict';
+
+var Promise = global.Promise || require('promise');
 var uuid = require('uuid');
 var WebSocketServer = require('ws').Server;
 
 function wsCtrl ( httpListener, logger ) {
-    this.logger = logger;
-    this.wss = new WebSocketServer({ server: httpListener });
-    // var that = this;
-    return Promise.resolve(this);
+    var instance = {};
+    instance.logger = logger;
+    instance.wss = new WebSocketServer({ server: httpListener });
+    return Promise.resolve(instance);
 }
 
 function addBroadcastPolyfill( instance ) {
@@ -14,11 +16,14 @@ function addBroadcastPolyfill( instance ) {
     .then(function(){
         instance.wss.broadcast = function(msg, sender) {
             instance.wss.clients.forEach(function(client){
-                if (client.id !== sender) client.send(msg) & instance.logger.info('Message sent:' + msg + ' from ' + sender + ' to ' + client.id);
+                if (client.id !== sender) {
+                    client.send(msg);
+                    instance.logger.info('Message sent:' + msg + ' from ' + sender + ' to ' + client.id);
+                }
             });
-        }
+        };
         return instance;
-    })
+    });
 }
 
 function addWsEvtListeners( instance ) {
@@ -44,4 +49,4 @@ module.exports = function( httpListener, logger ) {
     return new wsCtrl( httpListener, logger )
     .then(addBroadcastPolyfill)
     .then(addWsEvtListeners);
-}
+};

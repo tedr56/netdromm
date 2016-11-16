@@ -4,8 +4,10 @@
   "description": "netdromm",
   "main": "index.js",
   "scripts": {
-    "start": "node node_modules/nodemon/bin/nodemon.js index.js",
-    "test": "mocha spec/integration/init.js"
+    "start": "node index.js",
+    "debug": "node node_modules/nodemon/bin/nodemon.js index.js",
+    "test": "mocha spec/integration/init.js",
+	"lint": "node node_modules/jshint/bin/jshint index.js src/* spec/*"
   },
   "author": {
     "name": "jarpi,brucelane,azopcorp",
@@ -20,7 +22,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "jslint": "^0.10.3",
+    "jshint": "^2.9.4",
     "mocha": "^3.1.2"
   }
 }
