@@ -31,19 +31,19 @@ Fork and clone this your repo and copy it to /opt/
 
 ``` sh
 git clone https://github.com/videodromm/netdromm (replace videodromm by your name)
-cp -a netdromm/ /opt/
-cd /opt/netdromm/
+(no) cp -a netdromm/ /opt/
+(no) cd /opt/netdromm/
 npm install -g mocha nodemon
 npm install
 npm start
 ```
 
 Optional
-copy netdromm to /etc/init.d/ to launch at startup
+(no) copy netdromm to /etc/init.d/ to launch at startup
 
 ``` sh
-cp /opt/netdromm/netdromm /etc/init.d/
-update-rc.d netdromm defaults
+(no) cp /opt/netdromm/netdromm /etc/init.d/
+(no) update-rc.d netdromm defaults
 ```
 
 ######Run tests
