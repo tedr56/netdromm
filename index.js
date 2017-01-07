@@ -31,6 +31,23 @@ function initWsServer( httpListener ){
    return wss(httpListener, winston);
 }
 
+function listenProcessSignals(httpListener) {
+    return Promise
+           .resolve()
+           .then(function(){
+               process.on('SIGTERM', function () {
+                   process.exit(0);
+               });
+               process.on('uncaughtexception', function (err) {
+                  console.log(err);
+                  process.exit(0);
+               });
+               process.on('SIGINT', function () {
+                  process.exit(0);
+               });
+           });
+}
+
 function handleError( err ){
     winston.error(err);
 }
@@ -38,5 +55,6 @@ function handleError( err ){
 setUpLogger()
 .then(initHttpServer)
 .then(initWsServer)
+.then(listenProcessSignals)
 .catch(handleError);
 
