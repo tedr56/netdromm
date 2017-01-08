@@ -29,18 +29,32 @@ function addBroadcastPolyfill( instance ) {
 function addWsEvtListeners( instance ) {
     return Promise.resolve()
     .then(function(){
-         instance.wss.on('connection', function(socket){
-          socket.id = uuid.v4();
-          // to try if behind a proxy: logger.info('user connected' + socket.upgradeReq.headers['x-forwarded-for']);
-          instance.logger.info('user connected: ' + socket.upgradeReq.connection.remoteAddress);
-          socket.on('disconnect', function(){
-            instance.logger.info('user disconnected: ' + socket.upgradeReq.connection.remoteAddress);
-          });
-          socket.on('message', function(msg){
-            instance.logger.info('Message received: ' + msg + ' from ' + socket.upgradeReq.connection.remoteAddress);
-            instance.wss.broadcast(msg, socket.id);
-          });
+        instance.wss.on('connection', function(socket){
+            socket.id = uuid.v4();
+            // to try if behind a proxy: logger.info('user connected' + socket.upgradeReq.headers['x-forwarded-for']);
+            instance.logger.info('User connected: ' + socket.id + ' (' + socket.upgradeReq.connection.remoteAddress + ')');
+            
+            socket.on('close', function(){
+                instance.logger.info('User disconnected: ' + socket.id + ' (' + socket.upgradeReq.connection.remoteAddress + ')');
+            });
+            socket.on('message', function(msg){
+                instance.logger.info('Message received: ' + msg + ' from ' + socket.upgradeReq.connection.remoteAddress);
+                instance.wss.broadcast(msg, socket.id);
+            });
         });
+
+        // listen for server shut down
+        instance.wss.on('close', function(){
+            instance.logger.error('Server shut down.');
+            // try auto reconnect here ?
+        });
+
+        // handle wrongly formated queries
+        instance.wss.on('clientError', function(err, socket){
+            instance.logger.error('Wrong request from client '+ socket.id +'!');
+            socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+        });
+
         return instance;
     });
 }
