@@ -49,7 +49,8 @@ function addWsEvtListeners( instance ) {
             // try auto reconnect here ?
         });
 
-        instance.wss.on('clientError', (err, socket) => {
+        // handle wrongly formated queries
+        instance.wss.on('clientError', function(err, socket){
             instance.logger.error('Wrong request from client '+ socket.id +'!');
             socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
         });
