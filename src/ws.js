@@ -3,6 +3,7 @@
 var Promise = global.Promise || require('promise');
 var uuid = require('uuid');
 var WebSocketServer = require('ws').Server;
+var whitelist = require('../ip.whitelist.json');
 
 function wsCtrl ( httpListener, logger ) {
     var instance = {};
@@ -34,29 +35,32 @@ function disconnect(socket, instance) {
                     return e.id != socket.id;
                   });
               });
-    instance.logger.info('user disconnected: ' + socket.upgradeReq.connection.remoteAddress);
+    instance.logger.info('User disconnected: ' + socket.id + ' (' + socket.upgradeReq.connection.remoteAddress + ')');
+}
+
+function isAllowedHost(socket) {
+    var ip = socket.upgradeReq.connection.remoteAddress.match(/(\d{1,3}\.){3}\d{1,3}/);
+    if (!ip) return false;
+    return whitelist.allowedIps.filter(function(allowedIp){
+        return allowedIp === ip[0];
+    });
 }
 
 function addWsEvtListeners( instance ) {
     return Promise.resolve()
     .then(function(){
         instance.wss.on('connection', function(socket){
+          if (!isAllowedHost(socket)) return socket.close();
           socket.id = uuid.v4();
           instance.channels['default'].clients.push(socket);
           socket.channels = ['default'];
           // to try if behind a proxy: logger.info('user connected' + socket.upgradeReq.headers['x-forwarded-for']);
-<<<<<<< c7824e5d41656f55a6af6c090bdd80cf9afde513
-          instance.logger.info('User connected: ' + socket.id + ' (' + socket.upgradeReq.connection.remoteAddress + ')');
-          socket.on('disconnect', function(){
-            instance.logger.info('User disconnected: ' + socket.id + ' (' + socket.upgradeReq.connection.remoteAddress + ')');
-=======
-          instance.logger.info('user connected: ' + socket.upgradeReq.connection.remoteAddress);
+         instance.logger.info('user connected: ' + socket.upgradeReq.connection.remoteAddress);
          socket.on('close', function(){
                  return disconnect(socket, instance);
           });
           socket.on('disconnect', function(){
                  return disconnect(socket, instance);
->>>>>>> Join custom channel joinChannel + error handling + tests
           });
 
           socket.on('message', function(msg){
