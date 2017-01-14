@@ -50,6 +50,7 @@ describe('Websocket initialization', function(){
             ws2.close();
             done();
         });
+
         var ws2 = new WebSocket('ws://localhost:8088');
         ws2.on('open', function(){
            ws2.send(testMsg);
@@ -93,8 +94,64 @@ describe('Websocket initialization', function(){
         });
         ws2.on('message', function(msg){
             expect(msg).to.equals('Hello users!');
+            ws.close();
+            ws2.close();
             done();
         });
     });
 
+    it('Connect to custom channel', function(done){
+        var ws = new WebSocket('ws://localhost:8088');
+        ws.on('open', function(){
+           ws.send(JSON.stringify({cmd: 'joinChannel', channel: 'customChannel'}));
+        });
+        ws.on('message', function(msg){
+            var unwrappedMsg = JSON.parse(msg);
+            expect(unwrappedMsg).to.include.keys('joinedChannels');
+            expect(unwrappedMsg['joinedChannels']).to.be.an('array');
+            expect(unwrappedMsg['joinedChannels'][0]).to.equals('default');
+            expect(unwrappedMsg['joinedChannels'][1]).to.equals('customChannel');
+            ws.close();
+            done();
+        });
+    });
+
+    it('Returns error if custom channel already joined', function(done){
+        var ws = new WebSocket('ws://localhost:8088');
+        ws.on('open', function(){
+           ws.send(JSON.stringify({cmd: 'joinChannel', channel: 'customChannel'}));
+        });
+        ws.on('message', function(msg){
+            if (msg.indexOf('error') === -1) return ws.send(JSON.stringify({cmd: 'joinChannel', channel: 'customChannel'}));
+            var unwrappedMsg = JSON.parse(msg);
+            expect(unwrappedMsg).to.include.keys('error');
+            expect(unwrappedMsg['error']).to.equals('Channel already joined');
+            ws.close();
+            done();
+        });
+    });
+
+    it('Broadcast to custom channel', function(done){
+        var ws = new WebSocket('ws://localhost:8088');
+        var ws2 = new WebSocket('ws://localhost:8088');
+        ws.on('open', function(){
+           ws.send(JSON.stringify({cmd: 'joinChannel', channel: 'customChannel'}));
+        });
+
+        ws2.on('open', function(){
+           ws2.send(JSON.stringify({cmd: 'joinChannel', channel: 'customChannel'}));
+        });
+
+        ws.on('message', function(msg){
+            ws.send(JSON.stringify({channel:'customChannel', msg: 'Hello users!'}));
+        });
+
+        ws2.on('message', function(msg){
+            if (msg.indexOf('Hello') != -1) {
+                ws.close();
+                ws2.close();
+                done();
+            }
+        });
+    });
 });
