@@ -51,7 +51,9 @@ function addWsEvtListeners( instance ) {
             instance.logger.info('User disconnected: ' + socket.id + ' (' + socket.upgradeReq.connection.remoteAddress + ')');
 =======
           instance.logger.info('user connected: ' + socket.upgradeReq.connection.remoteAddress);
-
+         socket.on('close', function(){
+                 return disconnect(socket, instance);
+          });
           socket.on('disconnect', function(){
                  return disconnect(socket, instance);
 >>>>>>> Join custom channel joinChannel + error handling + tests
