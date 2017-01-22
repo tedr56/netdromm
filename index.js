@@ -3,8 +3,11 @@
 var Promise = global.Promise || require('promise');
 var nodemon = require('nodemon');
 var winston = require('winston');
-var http = require('http');
-var server = http.createServer();
+var https = require('https');
+var fs = require('fs');
+var cert = fs.readFileSync(process.env.CERT, 'utf8');
+var key = fs.readFileSync(process.env.KEY, 'utf8');
+var server = null;
 var wss = require('./src/ws.js');
 var  port = process.env.port || 8088;
 
@@ -20,6 +23,8 @@ function setUpLogger() {
 
 function initHttpServer() {
     return new Promise(function( resolve, reject ){
+        if (!cert || !key) reject('Check certs');
+        server = https.createServer({cert: cert , key: key });
         server.listen(port, function(err) {
             if (err) return reject(err);
             winston.info('Application server running on port '+ port +'!');
@@ -51,6 +56,7 @@ function listenProcessSignals(httpListener) {
 
 function handleError( err ){
     winston.error(err);
+    process.exit(1);
 }
 
 setUpLogger()
