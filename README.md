@@ -6,6 +6,13 @@ Websockets server for OSC, MIDI, chat, video channels, shaders, webp streaming e
 
 ######Setup nodejs 7
 
+Generate key / cert
+
+```
+openssl req -newkey rsa:2048 -new -nodes -keyout key.pem -out csr.pem 
+openssl x509 -req -days 365 -in csr.pem -signkey key.pem -out server.crt
+```
+
 On Linux
 
 ``` sh
@@ -16,7 +23,7 @@ sudo apt-get install -y nodejs
 If needed, compile from the source:
 
 ``` sh
-wget http://nodejs.org/dist/node-latest.tar.gz 
+wget http://nodejs.org/dist/node-latest.tar.gz
 tar -xzf node-latest.tar.gz
 cd node-7xx
 ./configure
