@@ -11,7 +11,7 @@
   },
   "author": {
     "name": "jarpi,brucelane,azopcorp",
-    "email": "jarpidev@gmail.com,bruce@batchass.fr"
+    "email": "jarpidev at gmail.com,bruce at batchass.fr"
   },
   "dependencies": {
     "nodemon": "^1.11.0",
