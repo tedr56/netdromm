@@ -41,7 +41,7 @@ function disconnect(socket, instance) {
 function isAllowedHost(socket) {
     var ip = socket.upgradeReq.connection.remoteAddress.match(/(\d{1,3}\.){3}\d{1,3}/);
     if (!ip) return false;
-    return whitelist.allowedIps.filter(function(allowedIp){
+    return whitelist.allowedIps.find(function(allowedIp){
         return allowedIp === ip[0];
     });
 }
