@@ -3,7 +3,7 @@
 var Promise = global.Promise || require('promise');
 var uuid = require('uuid');
 var WebSocketServer = require('ws').Server;
-var whitelist = require('../ip.whitelist.json');
+var whitelist = require('../sample.ip.whitelist.json');
 
 function wsCtrl ( httpListener, logger ) {
     var instance = {};
